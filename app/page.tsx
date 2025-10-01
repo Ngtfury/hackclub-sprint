@@ -1,26 +1,11 @@
-"use client"
-
 import CurvedLoop from "@/components/curved-loop"
 import HeroTerminal from "@/components/hero-terminal"
 import TrackCards from "@/components/track-cards"
 import SiteFooter from "@/components/site-footer"
-import { useEffect, useState } from "react"
 
-// Responsive curveAmount hook
-function useCurveAmount(desktop = 290, mobile = 900) {
-  const [curve, setCurve] = useState(desktop);
-  useEffect(() => {
-    const update = () => setCurve(window.innerWidth < 640 ? mobile : desktop);
-    window.addEventListener("resize", update);
-    update();
-    return () => window.removeEventListener("resize", update);
-  }, [desktop, mobile]);
-  return curve;
-}
+
 
 export default function Page() {
-  const curveAmount = useCurveAmount();
-
   return (
     <main className="bg-black text-white">
       <header className="fixed left-0 top-0 z-50 flex items-center gap-3 p-4">
@@ -30,23 +15,24 @@ export default function Page() {
 
       <div className="relative">
         <HeroTerminal />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-6 md:translate-y-8">
+        {/* nudge CurvedLoop slightly downward so the curve's top center meets the hero bottom.
+            Tweak translate-y values if you want it closer/farther: e.g., translate-y-4 or translate-y-10 */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-6 md:translate-y-16">
+          
           <CurvedLoop
             marqueeText="hackclub ✦ asiet ✦ "
-            className="fill-white/80 text-[3.5rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] w-full"
-            curveAmount={curveAmount}
-            speed={0.9}
+            className="fill-white/80"
+            curveAmount={190}
+            speed={1}
             direction="left"
             interactive={false}
             variant="compact"
           />
         </div>
       </div>
-
-      <div className="mt-40">
+      <div className="mt-20">
         <TrackCards overlayComingSoon blurAmount={12} />
       </div>
-
       <SiteFooter />
     </main>
   )
