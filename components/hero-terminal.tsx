@@ -25,7 +25,7 @@ export default function HeroTerminal() {
           scanlineIntensity={0.25}
           glitchAmount={1}
           noiseAmp={1}
-          tint="#eb4034"
+          tint="#f04646"
           brightness={0.9}
           chromaticAberration={0.0015}
           pageLoadAnimation
@@ -38,11 +38,10 @@ export default function HeroTerminal() {
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <p className="mb-4 text-sm tracking-[0.2em] text-rose-400 uppercase">HACK CLUB • SPRINT 1.0</p>
         <h1 className="text-balance text-4xl md:text-6xl lg:text-7xl font-extrabold text-white">
-          SPRINT: ACCELERATE YOUR SKILLS
+          SPRINT: RAPID LEARNING, REAL IMPACT.
         </h1>
         <p className="mt-6 text-pretty text-base md:text-lg text-zinc-300">
-          Join our intensive workshop series designed to rapidly enhance your tech skills. Dive into hands‑on projects,
-          learn from industry experts, and build a portfolio that stands out.
+A fast-track, project-based skill development program designed to introduce participants to emerging tech domains through both online and offline sessions.
         </p>
         {/* Button intentionally omitted per request */}
       </div>

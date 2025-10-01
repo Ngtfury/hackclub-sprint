@@ -9,7 +9,7 @@ interface CurvedLoopProps {
   curveAmount?: number
   direction?: "left" | "right"
   interactive?: boolean
-  variant?: "full" | "compact" // new
+  variant?: "full" | "compact"
 }
 
 const CurvedLoop: FC<CurvedLoopProps> = ({
@@ -19,8 +19,19 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   curveAmount = 400,
   direction = "left",
   interactive = true,
-  variant = "full", // new
+  variant = "full",
 }) => {
+  // Responsive curveAmount: less curve on mobile
+  const [responsiveCurve, setResponsiveCurve] = useState(curveAmount)
+  useEffect(() => {
+    const updateCurve = () => {
+      setResponsiveCurve(window.innerWidth < 640 ? 120 : curveAmount)
+    }
+    updateCurve()
+    window.addEventListener("resize", updateCurve)
+    return () => window.removeEventListener("resize", updateCurve)
+  }, [curveAmount])
+
   const text = useMemo(() => {
     const hasTrailing = /\s|\u00A0$/.test(marqueeText)
     return (hasTrailing ? marqueeText.replace(/\s+$/, "") : marqueeText) + "\u00A0"
@@ -33,7 +44,7 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   const [offset, setOffset] = useState(0)
   const uid = useId()
   const pathId = `curve-${uid}`
-  const pathD = `M-100,40 Q500,${40 + curveAmount} 1540,40`
+  const pathD = `M0,40 Q720,${40 + responsiveCurve} 1440,40`
 
   const dragRef = useRef(false)
   const lastXRef = useRef(0)
@@ -113,7 +124,7 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
 
   const containerClass =
     variant === "compact"
-      ? "w-full py-3 flex items-center justify-center" // slim divider
+      ? "w-full py-3 flex items-center justify-center"
       : "min-h-screen flex items-center justify-center w-full"
 
   const textSizeClass = variant === "compact" ? "text-[2rem] md:text-[3rem]" : "text-[6rem]"
