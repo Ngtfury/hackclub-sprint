@@ -24,8 +24,8 @@ export default function Page() {
   return (
     <main className="bg-black text-white">
       <header className="fixed left-0 top-0 z-50 flex items-center gap-3 p-4">
-        <img src="/images/hackclubasiet.png" alt="Hack Club ASIET logo" className="h-7 w-7 rounded-md" />
-        <span className="text-sm font-medium tracking-wide text-white">HackClub ASIET</span>
+        <img src="/images/hackclubasiet.png" alt="Hack Club ASIET logo" className="h-10 w-10 rounded-md" />
+        <span className="text-lg font-medium tracking-wide text-white">HackClub ASIET</span>
       </header>
 
       <div className="relative">
