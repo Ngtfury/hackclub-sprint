@@ -1,13 +1,16 @@
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'Sprint 1.0 | Hack Club ASIET',
-  description: 'hackclub asiet sprint 1.0',
-  generator: 'v0.app',
+  title: "Hackclub ASIET - Sprint 1.0",
+  description: "Sprint is a 7 day flagship event by Hackclub ASIET",
+  icons: {
+    icon: "/images/hackclubasiet.png",
+  },
 }
 
 export default function RootLayout({
@@ -16,10 +19,25 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        {children}
-        <Analytics />
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed left-0 top-0 -z-10 h-full w-full object-cover"
+        >
+          <source src="/videos/herovideomain.mp4" type="video/mp4" />
+        </video>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -18,7 +18,7 @@ export default function AIWorkshopPage() {
     setIsSubmitting(true)
     setMessage("")
     try {
-      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/ai", {
+      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/java", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,8 +45,8 @@ export default function AIWorkshopPage() {
   }
 
   const mentor = {
-    image: "/mentors/nandhu.jpg",
-    title: "Nandhu Krishnan",
+    image: "/mentors/hashim.jpg",
+    title: "Hashim Mohammed",
     subtitle: "Mentor",
   }
 
@@ -72,7 +72,7 @@ export default function AIWorkshopPage() {
             sprint
           </div>
           <p className="text-xs tracking-[0.3em] text-foreground/80 -mt-1 ml-1">
-            session #1
+            session #2
           </p>
         </div>
         <nav aria-label="Primary">
@@ -141,10 +141,10 @@ export default function AIWorkshopPage() {
                 About Mentor
               </h2>
               <p className="mt-4 text-sm md:text-base leading-relaxed tracking-widest">
-                Nandhu Krishnan A is an experienced Al Freelancer with a strong
-                background in machine learning, data science, and natural language
-                processing. With hands-on experience working on a variety of
-                A-based projects.
+Hashim Mohammed is a software developer with expertise in Java 
+programming and Spring Boot framework. He has a knack for building 
+robust and scalable backend systems and is passionate about sharing 
+his knowledge with budding developers.
               </p>
             </section>
 
@@ -156,10 +156,10 @@ export default function AIWorkshopPage() {
                 About Session
               </h2>
               <div className="mt-4 space-y-1 text-sm leading-relaxed">
-                <p>AI DEVELOPMENT - BASICS+ PROJECT</p>
+                <p>JAVA + SPRING BOOT</p>
                 <p>MODE: ONLINE</p>
                 <p>TIMING: 7:30 PM IST</p>
-                <p>MORE DETAILS: SREERAM</p>
+                <p>MORE DETAILS: SHAADI</p>
               </div>
               <div className="mt-6 flex items-center gap-2">
                 <input
@@ -189,10 +189,10 @@ export default function AIWorkshopPage() {
       {/* Bottom-right "SESSION 2 >>>>>" link */}
       <div className="absolute bottom-6 right-10">
         <Link
-          href="/sprint/java"
+          href="#"
           className="text-sm tracking-[0.35em] hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring/50"
         >
-          session 2 &gt;&gt;&gt;&gt;&gt;
+          session 3 &gt;&gt;&gt;&gt;&gt;
         </Link>
       </div>
     </main>
