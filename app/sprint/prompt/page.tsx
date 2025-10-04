@@ -18,7 +18,7 @@ export default function AIWorkshopPage() {
     setIsSubmitting(true)
     setMessage("")
     try {
-      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/java", {
+      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/prompt", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,8 +45,8 @@ export default function AIWorkshopPage() {
   }
 
   const mentor = {
-    image: "/mentors/hashim.jpg",
-    title: "Hashim Mohammed",
+    image: "/mentors/shaadi.jpg",
+    title: "Shaadi Sharath",
     subtitle: "Mentor",
   }
 
@@ -107,7 +107,7 @@ export default function AIWorkshopPage() {
             letterSpacing: "0.06em",
           }}
         >
-          Java + Spring Boot
+          UI/UX Design
         </h1>
       </section>
 
@@ -141,10 +141,7 @@ export default function AIWorkshopPage() {
                 About Mentor
               </h2>
               <p className="mt-4 text-sm md:text-base leading-relaxed tracking-widest">
-Hashim Mohammed is a software developer with expertise in Java 
-programming and Spring Boot framework. He has a knack for building 
-robust and scalable backend systems and is passionate about sharing 
-his knowledge with budding developers.
+UX Designer, skilled at crafting intuitive, visually appealing user interfaces and seamless user experiences.
               </p>
             </section>
 
@@ -189,7 +186,7 @@ his knowledge with budding developers.
       {/* Bottom-right "SESSION 2 >>>>>" link */}
       <div className="absolute bottom-6 right-10">
         <Link
-          href="/sprint/web"
+          href="#"
           className="text-sm tracking-[0.35em] hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring/50"
         >
           session 3 &gt;&gt;&gt;&gt;&gt;

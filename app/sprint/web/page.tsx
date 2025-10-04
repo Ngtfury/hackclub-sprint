@@ -18,7 +18,7 @@ export default function AIWorkshopPage() {
     setIsSubmitting(true)
     setMessage("")
     try {
-      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/java", {
+      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/ui", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,8 +45,8 @@ export default function AIWorkshopPage() {
   }
 
   const mentor = {
-    image: "/mentors/hashim.jpg",
-    title: "Hashim Mohammed",
+    image: "/mentors/pavan.jpg",
+    title: "Pavan",
     subtitle: "Mentor",
   }
 
@@ -72,7 +72,7 @@ export default function AIWorkshopPage() {
             sprint
           </div>
           <p className="text-xs tracking-[0.3em] text-foreground/80 -mt-1 ml-1">
-            session #2
+            session #3
           </p>
         </div>
         <nav aria-label="Primary">
@@ -107,7 +107,7 @@ export default function AIWorkshopPage() {
             letterSpacing: "0.06em",
           }}
         >
-          Java + Spring Boot
+          Web Development
         </h1>
       </section>
 
@@ -141,10 +141,10 @@ export default function AIWorkshopPage() {
                 About Mentor
               </h2>
               <p className="mt-4 text-sm md:text-base leading-relaxed tracking-widest">
-Hashim Mohammed is a software developer with expertise in Java 
-programming and Spring Boot framework. He has a knack for building 
-robust and scalable backend systems and is passionate about sharing 
-his knowledge with budding developers.
+Pavan is a freelance web developer with a focus on creating 
+user-friendly, responsive, and dynamic web applications. With years of 
+experience working on both front-end and back-end technologies, 
+Pavan's mentorship will empower participants to design,develop and deploy interactive websites and applications
               </p>
             </section>
 
@@ -156,10 +156,10 @@ his knowledge with budding developers.
                 About Session
               </h2>
               <div className="mt-4 space-y-1 text-sm leading-relaxed">
-                <p>JAVA + SPRING BOOT</p>
+                <p>WEB DEVELOPMENT</p>
                 <p>MODE: ONLINE</p>
                 <p>TIMING: 7:30 PM IST</p>
-                <p>MORE DETAILS: SHAADI</p>
+                <p>MORE DETAILS: ASWIN</p>
               </div>
               <div className="mt-6 flex items-center gap-2">
                 <input
@@ -189,10 +189,10 @@ his knowledge with budding developers.
       {/* Bottom-right "SESSION 2 >>>>>" link */}
       <div className="absolute bottom-6 right-10">
         <Link
-          href="/sprint/web"
+          href="#"
           className="text-sm tracking-[0.35em] hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring/50"
         >
-          session 3 &gt;&gt;&gt;&gt;&gt;
+          session 4 &gt;&gt;&gt;&gt;&gt;
         </Link>
       </div>
     </main>

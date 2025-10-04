@@ -18,7 +18,7 @@ export default function AIWorkshopPage() {
     setIsSubmitting(true)
     setMessage("")
     try {
-      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/java", {
+      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/ui", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export default function AIWorkshopPage() {
             letterSpacing: "0.06em",
           }}
         >
-          AI DEVELOPMENT
+          UI/UX Design
         </h1>
       </section>
 
