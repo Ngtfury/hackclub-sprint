@@ -1,10 +1,10 @@
 "use client"
 
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useEffect, useState, useRef } from "react"
-import React from "react"
+import type React from "react"
 
 type Track = {
   badge: string
@@ -22,39 +22,55 @@ type TrackCardsProps = {
 
 const tracks: Track[] = [
   {
-    badge: "WEB DEV",
-    title: "Web Fundamentals",
-    description: "Learn the basics of HTML, CSS, and JavaScript to build your first website.",
+    badge: "AI",
+    title: "AI Workshop",
+    description: "Master the fundamentals of AI and Machine Learning to build your first intelligent application from scratch.",
+    link: "/sprint/ai",
+    image: "mentors/nandhu.jpg"
+  },
+  {
+    badge: "JAVA",
+    title: "Java + Spring Boot",
+    description: "Build and deploy powerful, scalable backend services and REST APIs using Java and the Spring Boot framework.",
+    link: "/sprint/java",
+    image: "mentors/hashim.jpg"
+  },
+  {
+    badge: "WEB",
+    title: "Web Development",
+    description: "Create fully-functional, responsive websites from the ground up using HTML, CSS, JavaScript, and modern frameworks.",
+    image: "mentors/pavan.jpg",
     link: "/sprint/web",
   },
   {
-    badge: "MOBILE DEV",
-    title: "Mobile App Dev",
-    description: "Create your own mobile app for iOS or Android using modern frameworks.",
-    link: "#", // Placeholder link
+    badge: "UI/UX",
+    title: "UI/UX Design",
+    description: "Master the art of user-centric design by creating engaging, accessible, and beautiful interfaces with modern UI/UX tools.",
+    image: "mentors/brian.jpg",
+    link: "/sprint/ui",
   },
   {
     badge: "AI",
-    title: "Nandhu Krishnan",
-    description: "Explore data analysis, visualization, and machine learning techniques.",
-    image: "mentors/nandhu.jpg",
-    link: "/sprint/ai",
+    title: "Prompt Engineering",
+    description: "Learn to command and control AI language models by designing, refining, and implementing highly effective prompts.",
+    image: "mentors/shaadi.jpg",
+    link: "/sprint/prompt",
   },
 ]
 
-export default function TrackCards({
-  direction = "left",
-  speed = "normal",
-  pauseOnHover = true,
-}: TrackCardsProps) {
+export default function TrackCards({ direction = "left", speed = "normal", pauseOnHover = true }: TrackCardsProps) {
   const [isMounted, setIsMounted] = useState(false)
   const scrollerRef = useRef<HTMLDivElement>(null)
   const scrollerInnerRef = useRef<HTMLDivElement>(null)
 
-  // State for drag-to-scroll
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
-  const [scrollLeft, setScrollLeft] = useState(0)
+  const [scrollLeftAtStart, setScrollLeftAtStart] = useState(0)
+  const [hasMoved, setHasMoved] = useState(false)
+
+  const [isHovered, setIsHovered] = useState(false)
+
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
     setIsMounted(true)
@@ -65,48 +81,83 @@ export default function TrackCards({
 
     const scroller = scrollerRef.current
     const inner = scrollerInnerRef.current
-    const scrollWidth = inner.scrollWidth / 2 // Width of the original set of cards
+    const scrollWidth = inner.scrollWidth / 2
 
-    // If scrolled to the end of the duplicated content, jump back to the start
     if (scroller.scrollLeft >= scrollWidth) {
       scroller.scrollLeft = scroller.scrollLeft - scrollWidth
-    }
-    // If scrolled to the beginning, jump to the end of the original content
-    else if (scroller.scrollLeft <= 0) {
+    } else if (scroller.scrollLeft <= 0) {
       scroller.scrollLeft = scroller.scrollLeft + scrollWidth
     }
   }
 
-  const getSpeedClass = () => {
-    if (speed === "fast") return "animate-scroll-fast"
-    if (speed === "slow") return "animate-scroll-slow"
-    return "animate-scroll"
-  }
+  const speedPxPerSecond = (() => {
+    if (speed === "fast") return 120
+    if (speed === "slow") return 60
+    return 85
+  })()
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+  useEffect(() => {
+    if (!isMounted) return
+    let running = true
+    let last = performance.now()
+
+    const step = (now: number) => {
+      if (!running) return
+      const scroller = scrollerRef.current
+      const dt = Math.min(48, now - last)
+      last = now
+
+      if (scroller && !isDragging && (!pauseOnHover || !isHovered)) {
+        const pxPerMs = speedPxPerSecond / 1000
+        const delta = pxPerMs * dt * (direction === "left" ? -1 : 1)
+        scroller.scrollLeft += delta
+        handleInfiniteScroll()
+      }
+
+      rafRef.current = requestAnimationFrame(step)
+    }
+
+    rafRef.current = requestAnimationFrame(step)
+    return () => {
+      running = false
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [isMounted, direction, isDragging, isHovered, pauseOnHover, speedPxPerSecond])
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement
+    if (target.closest("button") || target.closest("a")) {
+      return
+    }
+
     if (!scrollerRef.current) return
     setIsDragging(true)
-    setStartX(e.pageX - scrollerRef.current.offsetLeft)
-    setScrollLeft(scrollerRef.current.scrollLeft)
+    setStartX(e.clientX)
+    setScrollLeftAtStart(scrollerRef.current.scrollLeft)
+    setHasMoved(false)
+    e.currentTarget.setPointerCapture?.(e.pointerId)
   }
 
-  const handleMouseLeave = () => {
-    setIsDragging(false)
-  }
-
-  const handleMouseUp = () => {
-    setIsDragging(false)
-  }
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging || !scrollerRef.current) return
-    e.preventDefault()
-    const x = e.pageX - scrollerRef.current.offsetLeft
-    const walk = (x - startX) * 2 // Multiply for faster scroll
-    scrollerRef.current.scrollLeft = scrollLeft - walk
+
+    const dx = e.clientX - startX
+    const distance = Math.abs(dx)
+
+    if (distance > 5) {
+      setHasMoved(true)
+      e.preventDefault()
+      scrollerRef.current.scrollLeft = scrollLeftAtStart - dx
+      handleInfiniteScroll()
+    }
   }
 
-  // Duplicate tracks for seamless scrolling
+  const endDrag = (e?: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(false)
+    setHasMoved(false)
+    if (e) e.currentTarget.releasePointerCapture?.((e as any).pointerId)
+  }
+
   const duplicatedTracks = [...tracks, ...tracks]
 
   if (!isMounted) {
@@ -114,66 +165,82 @@ export default function TrackCards({
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
+    <section className="mx-auto max-w-7xl px-6 py-16">
       <h2 className="mb-10 text-center text-3xl font-extrabold tracking-tight text-white md:text-5xl">
         CHOOSE YOUR TRACK
       </h2>
 
       <div
         ref={scrollerRef}
-        onMouseDown={handleMouseDown}
-        onMouseLeave={handleMouseLeave}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
         onScroll={handleInfiniteScroll}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => {
+          setIsHovered(false)
+          setIsDragging(false)
+        }}
         className={cn(
-          "scroller relative z-20 w-full cursor-grab overflow-hidden active:cursor-grabbing",
-          "[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]"
+          "relative z-20 w-full overflow-hidden select-none transform-gpu",
+          isDragging && hasMoved ? "cursor-grabbing" : "cursor-grab",
+          "[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
         )}
+        aria-label="Track cards scroller"
+        role="region"
       >
-        <div
-          ref={scrollerInnerRef}
-          className={cn(
-            "flex min-w-full shrink-0 gap-6 py-4",
-            !isDragging && getSpeedClass(), // Pause animation while dragging
-            pauseOnHover && "hover:[animation-play-state:paused]"
-          )}
-        >
+        <div ref={scrollerInnerRef} className={cn("flex min-w-full shrink-0 gap-6 py-4")}>
           {duplicatedTracks.map((t, i) => (
             <Card
               key={i}
-              className="w-[350px] max-w-full shrink-0 select-none bg-white/5 text-white/90 shadow-xl transition will-change-transform md:w-[400px]"
+              className="group h-[300px] w-[540px] shrink-0 select-none overflow-hidden border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-rose-500/20 will-change-transform"
             >
-              <CardHeader className="relative">
-                <span className="inline-flex items-center rounded-full border border-rose-400/60 bg-transparent px-2 py-0.5 text-xs font-semibold text-rose-300">
-                  {t.badge}
-                </span>
-                <CardTitle className="mt-4 text-2xl">{t.title}</CardTitle>
-                <CardDescription className="text-zinc-300">{t.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="mt-4 flex flex-col">
-                {t.image ? (
-                  <img
-                    src={t.image}
-                    alt={t.title}
-                    className="aspect-[4/5] w-full rounded-md object-cover"
-                  />
-                ) : (
-                  <div className="grid aspect-[4/5] w-full place-items-center rounded-md border border-white/10 bg-white/5">
-                    <span className="text-sm text-zinc-400">Image placeholder</span>
+              <div className="flex h-full flex-col">
+                <div className="flex flex-1 min-h-0 items-center justify-center px-4 py-3">
+                  <div className="flex h-full w-full items-center gap-4">
+                    <div
+                      className="relative shrink-0 overflow-hidden rounded-lg"
+                      style={{ width: "140px", maxHeight: "180px" }}
+                    >
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-rose-500/10 to-purple-500/10">
+                        {t.image ? (
+                          <img
+                            src={t.image || "/placeholder.svg"}
+                            alt={t.title}
+                            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="grid h-full w-full place-items-center">
+                            <div className="text-center">
+                              <div className="mx-auto mb-2 h-10 w-10 rounded-full bg-white/10 backdrop-blur-sm" />
+                              <span className="text-xs text-zinc-400">Image</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-1 min-h-0 flex-col justify-center py-2 overflow-hidden">
+                      <span className="inline-flex w-fit items-center rounded-full border border-rose-400/60 bg-rose-500/10 px-3 py-1 text-xs font-bold tracking-wider text-rose-300 backdrop-blur-sm">
+                        {t.badge}
+                      </span>
+                      <CardTitle className="mt-3 text-xl font-bold leading-tight text-white">{t.title}</CardTitle>
+                      <CardDescription className="mt-2 text-sm leading-relaxed text-zinc-300">
+                        {t.description}
+                      </CardDescription>
+                    </div>
                   </div>
-                )}
-                <a
-                  href={t.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4"
-                >
-                  <Button className="w-full cursor-pointer bg-[rgb(240,70,70)] text-white hover:bg-[rgb(240,70,70)]/90">
-                    Register
-                  </Button>
-                </a>
-              </CardContent>
+                </div>
+
+                <div className="relative z-10 mt-1 px-3 pb-3">
+                  <a href={t.link} target="_blank" rel="noopener noreferrer" className="block w-full">
+                    <Button className="w-full cursor-pointer bg-gradient-to-r from-rose-500 to-rose-600 font-semibold text-white shadow-lg transition-all duration-300 hover:from-rose-600 hover:to-rose-700 hover:shadow-rose-500/50">
+                      Register Now
+                    </Button>
+                  </a>
+                </div>
+              </div>
             </Card>
           ))}
         </div>

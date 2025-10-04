@@ -31,7 +31,7 @@ export default function Page() {
         </div>
       </div>
       <div className="mt-20">
-        <TrackCards overlayComingSoon blurAmount={12} />
+        <TrackCards />
       </div>
       <SiteFooter />
     </main>
