@@ -24,35 +24,40 @@ const tracks: Track[] = [
   {
     badge: "AI",
     title: "AI Workshop",
-    description: "Master the fundamentals of AI and Machine Learning to build your first intelligent application from scratch.",
+    description:
+      "Master the fundamentals of AI and Machine Learning to build your first intelligent application from scratch.",
     link: "/sprint/ai",
-    image: "mentors/nandhu.jpg"
+    image: "mentors/nandhu.jpg",
   },
   {
     badge: "JAVA",
     title: "Java + Spring Boot",
-    description: "Build and deploy powerful, scalable backend services and REST APIs using Java and the Spring Boot framework.",
+    description:
+      "Build and deploy powerful, scalable backend services and REST APIs using Java and the Spring Boot framework.",
     link: "/sprint/java",
-    image: "mentors/hashim.jpg"
+    image: "mentors/hashim.jpg",
   },
   {
     badge: "WEB",
     title: "Web Development",
-    description: "Create fully-functional, responsive websites from the ground up using HTML, CSS, JavaScript, and modern frameworks.",
+    description:
+      "Create fully-functional, responsive websites from the ground up using HTML, CSS, JavaScript, and modern frameworks.",
     image: "mentors/pavan.jpg",
     link: "/sprint/web",
   },
   {
     badge: "UI/UX",
     title: "UI/UX Design",
-    description: "Master the art of user-centric design by creating engaging, accessible, and beautiful interfaces with modern UI/UX tools.",
+    description:
+      "Master the art of user-centric design by creating engaging, accessible, and beautiful interfaces with modern UI/UX tools.",
     image: "mentors/brian.jpg",
     link: "/sprint/ui",
   },
   {
     badge: "AI",
     title: "Prompt Engineering",
-    description: "Learn to command and control AI language models by designing, refining, and implementing highly effective prompts.",
+    description:
+      "Learn to command and control AI language models by designing, refining, and implementing highly effective prompts.",
     image: "mentors/shaadi.jpg",
     link: "/sprint/prompt",
   },
@@ -132,7 +137,7 @@ export default function TrackCards({ direction = "left", speed = "normal", pause
 
     if (!scrollerRef.current) return
     setIsDragging(true)
-    setStartX(e.clientX)
+    setStartX(e.pageX || e.clientX)
     setScrollLeftAtStart(scrollerRef.current.scrollLeft)
     setHasMoved(false)
     e.currentTarget.setPointerCapture?.(e.pointerId)
@@ -141,10 +146,11 @@ export default function TrackCards({ direction = "left", speed = "normal", pause
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging || !scrollerRef.current) return
 
-    const dx = e.clientX - startX
+    const currentX = e.pageX || e.clientX
+    const dx = currentX - startX
     const distance = Math.abs(dx)
 
-    if (distance > 5) {
+    if (distance > 10) {
       setHasMoved(true)
       e.preventDefault()
       scrollerRef.current.scrollLeft = scrollLeftAtStart - dx
@@ -165,8 +171,8 @@ export default function TrackCards({ direction = "left", speed = "normal", pause
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
-      <h2 className="mb-10 text-center text-3xl font-extrabold tracking-tight text-white md:text-5xl">
+    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+      <h2 className="mb-8 text-center text-2xl font-extrabold tracking-tight text-white sm:mb-10 sm:text-3xl md:text-5xl">
         CHOOSE YOUR TRACK
       </h2>
 
@@ -183,25 +189,42 @@ export default function TrackCards({ direction = "left", speed = "normal", pause
           setIsDragging(false)
         }}
         className={cn(
-          "relative z-20 w-full overflow-hidden select-none transform-gpu",
+          "relative z-20 w-full overflow-x-auto overflow-y-hidden select-none",
+          "touch-action-pan-x overscroll-behavior-x-contain",
+          "will-change-scroll",
           isDragging && hasMoved ? "cursor-grabbing" : "cursor-grab",
-          "[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+          "[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
+          "sm:[mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]",
+          "md:[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
         )}
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          WebkitOverflowScrolling: "touch",
+          contain: "layout style paint",
+          transform: "translateZ(0)",
+        }}
         aria-label="Track cards scroller"
         role="region"
       >
-        <div ref={scrollerInnerRef} className={cn("flex min-w-full shrink-0 gap-6 py-4")}>
+        <style jsx>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+
+        <div ref={scrollerInnerRef} className={cn("flex min-w-full shrink-0 gap-4 py-4 sm:gap-6")}>
           {duplicatedTracks.map((t, i) => (
             <Card
               key={i}
-              className="group h-[300px] w-[540px] shrink-0 select-none overflow-hidden border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-rose-500/20 will-change-transform"
+              className="group h-[280px] w-[78vw] shrink-0 select-none overflow-hidden border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm shadow-2xl transition-all duration-300 hover:shadow-rose-500/20 sm:h-[300px] sm:w-[420px] md:w-[480px] lg:w-[540px] lg:hover:scale-[1.02]"
             >
               <div className="flex h-full flex-col">
-                <div className="flex flex-1 min-h-0 items-center justify-center px-4 py-3">
-                  <div className="flex h-full w-full items-center gap-4">
+                <div className="flex flex-1 min-h-0 items-center justify-center px-3 py-2 sm:px-4 sm:py-3">
+                  <div className="flex h-full w-full items-center gap-3 sm:gap-4">
                     <div
                       className="relative shrink-0 overflow-hidden rounded-lg"
-                      style={{ width: "140px", maxHeight: "180px" }}
+                      style={{ width: "110px", maxHeight: "160px" }}
                     >
                       <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-rose-500/10 to-purple-500/10">
                         {t.image ? (
@@ -222,20 +245,22 @@ export default function TrackCards({ direction = "left", speed = "normal", pause
                     </div>
 
                     <div className="flex flex-1 min-h-0 flex-col justify-center py-2 overflow-hidden">
-                      <span className="inline-flex w-fit items-center rounded-full border border-rose-400/60 bg-rose-500/10 px-3 py-1 text-xs font-bold tracking-wider text-rose-300 backdrop-blur-sm">
+                      <span className="inline-flex w-fit items-center rounded-full border border-rose-400/60 bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-rose-300 backdrop-blur-sm sm:px-3 sm:py-1 sm:text-xs">
                         {t.badge}
                       </span>
-                      <CardTitle className="mt-3 text-xl font-bold leading-tight text-white">{t.title}</CardTitle>
-                      <CardDescription className="mt-2 text-sm leading-relaxed text-zinc-300">
+                      <CardTitle className="mt-2 text-base font-bold leading-tight text-white sm:mt-3 sm:text-lg lg:text-xl">
+                        {t.title}
+                      </CardTitle>
+                      <CardDescription className="mt-1.5 text-xs leading-relaxed text-zinc-300 sm:mt-2 sm:text-sm line-clamp-3">
                         {t.description}
                       </CardDescription>
                     </div>
                   </div>
                 </div>
 
-                <div className="relative z-10 mt-1 px-3 pb-3">
+                <div className="relative z-10 mt-1 px-2.5 pb-2.5 sm:px-3 sm:pb-3">
                   <a href={t.link} target="_blank" rel="noopener noreferrer" className="block w-full">
-                    <Button className="w-full cursor-pointer bg-gradient-to-r from-rose-500 to-rose-600 font-semibold text-white shadow-lg transition-all duration-300 hover:from-rose-600 hover:to-rose-700 hover:shadow-rose-500/50">
+                    <Button className="w-full cursor-pointer bg-gradient-to-r from-rose-500 to-rose-600 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:from-rose-600 hover:to-rose-700 hover:shadow-rose-500/50 sm:text-base">
                       Register Now
                     </Button>
                   </a>
