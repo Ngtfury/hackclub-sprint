@@ -189,7 +189,7 @@ Pavan's mentorship will empower participants to design,develop and deploy intera
       {/* Bottom-right "SESSION 2 >>>>>" link */}
       <div className="absolute bottom-6 right-10">
         <Link
-          href="#"
+          href="/sprint/ui"
           className="text-sm tracking-[0.35em] hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring/50"
         >
           session 4 &gt;&gt;&gt;&gt;&gt;

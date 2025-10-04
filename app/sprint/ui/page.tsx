@@ -72,7 +72,7 @@ export default function AIWorkshopPage() {
             sprint
           </div>
           <p className="text-xs tracking-[0.3em] text-foreground/80 -mt-1 ml-1">
-            session #2
+            session #4
           </p>
         </div>
         <nav aria-label="Primary">
@@ -141,7 +141,9 @@ export default function AIWorkshopPage() {
                 About Mentor
               </h2>
               <p className="mt-4 text-sm md:text-base leading-relaxed tracking-widest">
-UX Designer, skilled at crafting intuitive, visually appealing user interfaces and seamless user experiences.
+Brian Roy Mathew is a UX designer from S5 EEE who excels at crafting 
+intuitive, visually appealing user interfaces and seamless user 
+experiences.
               </p>
             </section>
 
@@ -153,10 +155,10 @@ UX Designer, skilled at crafting intuitive, visually appealing user interfaces a
                 About Session
               </h2>
               <div className="mt-4 space-y-1 text-sm leading-relaxed">
-                <p>JAVA + SPRING BOOT</p>
+                <p>UI/UX </p>
                 <p>MODE: ONLINE</p>
-                <p>TIMING: 7:30 PM IST</p>
-                <p>MORE DETAILS: SHAADI</p>
+                <p>TIMING: 9:00 AM IST</p>
+                <p>MORE DETAILS: SHIVAPRIYA</p>
               </div>
               <div className="mt-6 flex items-center gap-2">
                 <input
@@ -186,10 +188,10 @@ UX Designer, skilled at crafting intuitive, visually appealing user interfaces a
       {/* Bottom-right "SESSION 2 >>>>>" link */}
       <div className="absolute bottom-6 right-10">
         <Link
-          href="#"
+          href="/sprint/prompt"
           className="text-sm tracking-[0.35em] hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring/50"
         >
-          session 3 &gt;&gt;&gt;&gt;&gt;
+          session 5 &gt;&gt;&gt;&gt;&gt;
         </Link>
       </div>
     </main>
