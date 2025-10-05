@@ -159,7 +159,15 @@ his knowledge with budding developers.
                 <p>JAVA + SPRING BOOT</p>
                 <p>MODE: ONLINE</p>
                 <p>TIMING: 7:30 PM IST</p>
-                <p>MORE DETAILS: SHAADI</p>
+                <p className="flex items-center">
+  MORE DETAILS:
+  <a href="https://wa.me/+919633697930?text=Hey%20Shaadi,%0AI%20have%20a%20query%20about%20the%20Java%20Spring Boot%20session%20for%20Sprint." className="text-rose-300 inline-flex items-center ml-1">
+    SHAADI (+91 96336 97930)
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 ml-1">
+      <path fill-rule="evenodd" d="M4.25 5.25A.75.75 0 0 1 5 4.5h8.5a.75.75 0 0 1 .75.75v8.5a.75.75 0 0 1-1.5 0V6.56L4.03 16.72a.75.75 0 1 1-1.06-1.06L12.94 5.25H5A.75.75 0 0 1 4.25 4.5Z" clip-rule="evenodd" />
+    </svg>
+  </a>
+</p>
               </div>
               <div className="mt-6 flex items-center gap-2">
                 <input
