@@ -18,7 +18,7 @@ export default function AIWorkshopPage() {
     setIsSubmitting(true)
     setMessage("")
     try {
-      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/ui", {
+      const response = await fetch("https://hackclub-membership-api.onrender.com/sprint/web", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
