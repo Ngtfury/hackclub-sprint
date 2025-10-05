@@ -141,10 +141,10 @@ export default function AIWorkshopPage() {
                 About Mentor
               </h2>
               <p className="mt-4 text-sm md:text-base leading-relaxed tracking-widest">
-                Nandhu Krishnan A is an experienced Al Freelancer with a strong
+                Nandhu Krishnan A is an experienced AI developer, and currently working at Laennec AI as an AI Intern. He has a strong
                 background in machine learning, data science, and natural language
                 processing. With hands-on experience working on a variety of
-                A-based projects.
+                AI-based projects.
               </p>
             </section>
 
