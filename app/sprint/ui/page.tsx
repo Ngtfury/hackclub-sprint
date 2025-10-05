@@ -156,7 +156,7 @@ experiences.
               </h2>
               <div className="mt-4 space-y-1 text-sm leading-relaxed">
                 <p>UI/UX </p>
-                <p>MODE: ONLINE</p>
+                <p>MODE: OFFLINE</p>
                 <p>TIMING: 9:00 AM IST</p>
                 <p className="flex items-center">
   MORE DETAILS:
